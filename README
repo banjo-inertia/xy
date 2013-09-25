@@ -2,4 +2,4 @@
 
 actiondat - Perform an action on a 2D set of data.
 
-Many scientific data sets are two dimensional: a set of abscissae and corresponding ordinates. This package provides a way to generate a script that easily performs a single action on 2D data, for example: calculating it, plotting it on the screen, or generating a graphics file of the plot.
+Many scientific data sets are two dimensional: a set of abscissae and corresponding ordinates. The functionality in this package is intended to be used in command line scripts that perform single actions such as calculating the data, plotting the data and displaying it onscreen, or plotting the data and saving the plot as an image file (e.g. jpg, pdf, eps, etc.).
