@@ -1,5 +1,5 @@
 2013-09-25
 
-actiondat - Perform an action on a 2D set of data.
+datac - Perform an action on a 2D set of data.
 
 Many scientific data sets are two dimensional: a set of abscissae and corresponding ordinates. The functionality in this package is intended to be used in command line scripts that perform single actions such as calculating the data, plotting the data and displaying it onscreen, or plotting the data and saving the plot as an image file (e.g. jpg, pdf, eps, etc.).
