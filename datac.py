@@ -39,20 +39,28 @@ def main():
 
     # I first need to see if any data exists.
 
+
     # Next, I should load that data and check it to see if it matches the abscissa data I'm using to calculate the output I want. If it doesn't pass the check, I should throw an error and exit.
 
-
-def get_program_filename():
+def get_prog_name_root(prog_name):
     """
-    Return the name of the program currently being executed.
+    Return the name of the program without any filename extension.
     """
-    pass
+    return os.path.splitext(prog_name)[0]
 
 def get_name_root(name, prefix="plot", suffix=None):
     """
     Strip off prefix and suffix from the specified name.
     """
-    pass
+    strip_name = name.lstrip(prefix)
+    strip_name = strip_name.rstrip(suffix)
+
+    # Remove any underscores if they are there.
+    strip_name = strip_name.lstrip("_")
+    strip_name = strip_name.rstrip("_")
+
+    return strip_name
+
 
 if __name__ == "__main__":
     main()
