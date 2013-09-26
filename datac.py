@@ -37,8 +37,22 @@ class main():
 
         args = parser.parse_args()
 
-        # Set up some data I'll need
+        # Initialize attributes of object.
+        # --------------------------------
+        # Root name for data and plot.
         self.name_root = get_name_root(os.path.splitext(parser.prog)[0])
+
+        # Location of data.
+        if args.data_dir:
+            self.data_dir = os.path.abspath(args.data_dir)
+        else:
+            self.data_dir = os.getcwd()
+
+        # Location of figures.
+        if args.plot_dir:
+            self.plot_dir = os.path.abspath(args.plot_dir)
+        else:
+            self.plot_dir = os.getcwd()
 
         # I first need to see if any data exists.
         os.path.isfile(self.name_root + ".dat")
