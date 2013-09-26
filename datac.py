@@ -41,8 +41,7 @@ class main():
         self.name_root = get_name_root(os.path.splitext(parser.prog)[0])
 
         # I first need to see if any data exists.
-        
-
+        os.path.isfile(self.name_root + ".dat")
 
         # Next, I should load that data and check it to see if it matches the abscissa data I'm using to calculate the output I want. If it doesn't pass the check, I should throw an error and exit.
 
