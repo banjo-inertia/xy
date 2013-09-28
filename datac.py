@@ -6,6 +6,7 @@ Perform an action on a 2D set of data.
 import os
 import logging
 import argparse
+import copy
 
 
 class main():
@@ -107,7 +108,10 @@ class main():
         """
         Define the abscissae for the calculation.
 
-        This method should be overloaded by the user. At the end of this method, a call to `gen_abscissae` needs to be made.
+        The user overloads this method to define the abscissae for the calculation. The user must overload this method to return a tuple with three items (abscissae, base_params, key) in order for the class to generate the list of dictionaries. 
+        * abscissae: An iteratable object, such as a numpy array, that contains the abscissae.
+        * base_params: A dictionary that, along with an item from the iteratable object above, can be used to instantiate an object of the class that contains the desired ordinate calculator method.
+        * key: A string defining a key in the dictionary above, which corresponds to the abscissa data.
         """
         pass
 
@@ -117,27 +121,39 @@ class main():
 
         :param dict params: Dictionary to instantiate the object containing the ordinate calculator method.
 
-        This method should be overloaded by the user. At the end of this method, a call to `calc_data` needs to be made. This method is called by the user-subclassed `main` object on each item in its `data` atrribute. Each item is a dict that comes in with the `params` variable.
+        The user overloads this method to define the calculation to be performed on each item of the object's list of dictionaries. The user must overload this method to return a tuple with two items (calculator_obj, calculator_method).
+        * calculator_obj: An object with the desired ordinate calculator method.
+        * calculator_method: A string with the name of the desired calculator method of the object defined above. This string will also be used as a key in the dict storing the data.
         """
         pass
 
-    def gen_abscissae(self, key, abscissae, base_params):
+    def gen_abscissae(self, abscissae, base_params, key):
         """
-        Provisionally set attrib `data` with abscissae generated from args.
+        Return a list of dicts representing abscissae.
 
-        :param str key: Dictionary key of the abscissa data.
         :param float abscissae: Value of abscissa.
         :param dict base_params: Additional params used to instantiate the object containing the ordinate calculator method.
+        :param str key: Dictionary key of the abscissa data.
         """
-        pass
+        # Probably should be using a list comprehension here.
+        data = []
+        for abscissa in abscissae:
+            abscissa_dict = copy.copy(base_params)
+            abscissa_dict[key] = abscissa
+            data.append(abscissa_dict)
 
-    def calc_data(self, key, obj):
+        return data
+
+    def calc_data(self):
         """
-        Set ordinate key for all dicts in the `data` attribute.
-
-        :params str key: Method to call from the object which calculates the ordinate.
-        :params obj: Object containing the ordinate calculator method.
-
-
+        Return a list of dicts including both abscissae and ordinates.
         """
-        pass
+        # Probably should use list comprehensions here, too.
+        data = []
+        for params in self.data:
+            ordinate_dict = copy.copy(params)
+            obj, calc_method = self.def_calc(ordinate_dict)
+            ordinate_dict[calc_method] = getattr(obj, calc_method)()
+            data.append(ordinate_dict)
+
+        return data
