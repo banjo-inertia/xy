@@ -66,7 +66,7 @@ class main():
         prog_name = os.path.splitext(name)[0]
         self.name_root = self.strip_prog_name(prog_name)
 
-    def strip_prog_name(name, prefix="plot", suffix=None):
+    def strip_prog_name(self, name, prefix="plot", suffix=None):
         """
         Strip off prefix and suffix from the specified name.
         """
@@ -79,10 +79,41 @@ class main():
 
         return strip_name
 
-    def gen_abscissae(self):
+    def def_abscissae(self):
         """
-        Return the list of dicts used to instantiate objects.
+        Define the abscissae for the calculation.
 
-        This method should be overloaded by the user to generate the abscissae.
+        This method should be overloaded by the user. At the end of this method, a call to `gen_abscissae` needs to be made.
+        """
+        pass
+
+    def def_calc(self, params):
+        """
+        Define the calculation to be performed to generate the ordinates.
+
+        :param dict params: Dictionary to instantiate the object containing the ordinate calculator method.
+
+        This method should be overloaded by the user. At the end of this method, a call to `calc_data` needs to be made. This method is called by the user-subclassed `main` object on each item in its `data` atrribute. Each item is a dict that comes in with the `params` variable.
+        """
+        pass
+
+    def gen_abscissae(self, key, abscissae, base_params):
+        """
+        Provisionally set attrib `data` with abscissae generated from args.
+
+        :param str key: Dictionary key of the abscissa data.
+        :param float abscissae: Value of abscissa.
+        :param dict base_params: Additional params used to instantiate the object containing the ordinate calculator method.
+        """
+        pass
+
+    def calc_data(self, key, obj):
+        """
+        Set ordinate key for all dicts in the `data` attribute.
+
+        :params str key: Method to call from the object which calculates the ordinate.
+        :params obj: Object containing the ordinate calculator method.
+
+
         """
         pass
