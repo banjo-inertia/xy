@@ -40,7 +40,7 @@ class main():
         # Initialize attributes of object.
         # --------------------------------
         # Root name for data and plot.
-        self.name_root = get_name_root(os.path.splitext(parser.prog)[0])
+        self.set_name_root(parser.prog)
 
         # Location of data.
         if args.data_dir:
@@ -59,7 +59,14 @@ class main():
 
         # Next, I should load that data and check it to see if it matches the abscissa data I'm using to calculate the output I want. If it doesn't pass the check, I should throw an error and exit.
 
-    def get_name_root(name, prefix="plot", suffix=None):
+    def set_name_root(self, name):
+        """
+        Sets the `name_root` attribute of the `main` object.
+        """
+        prog_name = os.path.splitext(name)[0]
+        self.name_root = self.strip_prog_name(prog_name)
+
+    def strip_prog_name(name, prefix="plot", suffix=None):
         """
         Strip off prefix and suffix from the specified name.
         """
