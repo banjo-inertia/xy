@@ -44,7 +44,12 @@ class main():
         self.set_plot_dir(args.plot_dir)
 
         # I first need to see if any data exists.
-        os.path.isfile(self.name_root + ".dat")
+        data_file = os.path.join(self.data_dir, self.name_root + ".dat")
+
+        if os.path.isfile(data_file):
+            pass
+        else:
+            pass
 
         # Next, I should load that data and check it to see if it matches the abscissa data I'm using to calculate the output I want. If it doesn't pass the check, I should throw an error and exit.
 
