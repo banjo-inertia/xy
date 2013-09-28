@@ -70,14 +70,19 @@ class main():
         """
         Strip off prefix and suffix from the specified name.
         """
-        strip_name = name.lstrip(prefix)
-        strip_name = strip_name.rstrip(suffix)
+        if prefix:
+            if name.startswith(prefix):
+                name = name.lstrip(prefix)
+
+        if suffix:
+            if name.endswith(suffix):
+                name = name.rstrip(suffix)
 
         # Remove any underscores if they are there.
-        strip_name = strip_name.lstrip("_")
-        strip_name = strip_name.rstrip("_")
+        name = name.lstrip("_")
+        name = name.rstrip("_")
 
-        return strip_name
+        return name
 
     def def_abscissae(self):
         """
