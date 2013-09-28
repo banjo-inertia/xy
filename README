@@ -3,3 +3,58 @@
 datac - Perform an action on a 2D set of data.
 
 Many scientific data sets are two dimensional: a set of abscissae and corresponding ordinates. The functionality in this package is intended to be used in command line scripts that perform single actions such as calculating the data, plotting the data and displaying it onscreen, or plotting the data and saving the plot as an image file (e.g. jpg, pdf, eps, etc.).
+
+In this way, I can write these values to the .dat file that the main object writes to disk so that the user can know, at a glance, which data is the abscissa, which is the ordinate, and which data are necessary for the calculation, but are fixed.
+
+Example
+-------
+This library gives the user a framework to to calculate, plot, and manage 2D data by simply writing a script. All the user has to do is import the datac module, then overload the def_abscissae and def_calc methods:
+
+    #!/usr/bin/env python
+    # -*- coding: utf-8 -*-
+
+    import datac
+    import numpy as np
+    import bete # <== generalize this import statement.
+
+    class my_calculator(datac.main):
+        """
+        Script to calculate my data.
+        """
+
+        def def_abscissae(self):
+            """
+            Temperature goes from 300K to 500K
+            """
+
+            # Define an iterable object for the abscissae.
+            abscissae = np.linspace(300,500,100)
+
+            # Define a dict of base parameters to instantiate the object with the desired calculator method.
+            base_params = {"temp": 300,
+                            "work_function": 0.5}
+
+            # Specify the key of the abscissa in the instantiating dict.
+            key = "temp"
+
+            # Finally, call the gen_abscissae method.
+            self.gen_abscissae(key, abscissae, base_params)
+
+        def def_calc(self, params):
+            """
+            Output current density
+            """
+
+            # Instantiate an object with the desired calculator method.
+            el = bete.Electrode(params)
+
+            # Specify the calculator method of the object. This name will be used as the key in the dictionary specifying the 
+            key = "calc_output_current_density"
+            
+            # Finally, call the calc_data method.
+            self.calc_data(key, el)
+
+    if __name__ == "__main__":
+
+        # Instantiate the class we just defined.
+        calculator = my_calculator()
