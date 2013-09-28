@@ -39,20 +39,9 @@ class main():
 
         # Initialize attributes of object.
         # --------------------------------
-        # Root name for data and plot.
         self.set_name_root(parser.prog)
-
-        # Location of data.
-        if args.data_dir:
-            self.data_dir = os.path.abspath(args.data_dir)
-        else:
-            self.data_dir = os.getcwd()
-
-        # Location of figures.
-        if args.plot_dir:
-            self.plot_dir = os.path.abspath(args.plot_dir)
-        else:
-            self.plot_dir = os.getcwd()
+        self.set_data_dir(args.data_dir)
+        self.set_plot_dir(args.plot_dir)
 
         # I first need to see if any data exists.
         os.path.isfile(self.name_root + ".dat")
@@ -61,10 +50,35 @@ class main():
 
     def set_name_root(self, name):
         """
-        Sets the `name_root` attribute of the `main` object.
+        Sets the `name_root` attribute.
         """
         prog_name = os.path.splitext(name)[0]
         self.name_root = self.strip_prog_name(prog_name)
+
+    def set_data_dir(self, loc):
+        """
+        Sets the `data_dir` attribute, exception if directory doesn't exist
+        """
+        if loc:
+            self.data_dir = os.path.abspath(loc)
+        else:
+            self.data_dir = os.getcwd()
+
+        if not os.path.exists(self.data_dir):
+            raise OSError(0, "Data directory not found", self.data_dir)
+
+    def set_plot_dir(self, loc):
+        """
+        Sets the `plot_dir` attribute, exception if directory doesn't exist
+        """
+        if loc:
+            self.plot_dir = os.path.abspath(loc)
+        else:
+            self.plot_dir = os.getcwd()
+
+        if not os.path.exists(self.plot_dir):
+            raise OSError(1, "Plot directory not found", self.plot_dir)
+
 
     def strip_prog_name(self, name, prefix="plot", suffix=None):
         """
