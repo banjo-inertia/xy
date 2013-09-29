@@ -12,6 +12,13 @@ import copy
 class main():
     """
     Class that always gets instantiated when program is run.
+
+    Attributes
+    ----------
+    name_root: Name of the calling script stripped of the filename extension and 'plot' or 'plot_' prefix. E.g., if the name of the script is 'plot_fig01.py', name_root is 'fig01'.
+    data_dir: Directory in which data is located/to be written.
+    plot_dir: Directory in which the plot image file is to be written.
+    data: List of dicts containing the abscissae, ordinates, and fixed terms used calculate the ordinates.
     """
 
     def __init__(self):
@@ -44,15 +51,48 @@ class main():
         self.set_data_dir(args.data_dir)
         self.set_plot_dir(args.plot_dir)
 
-        # I first need to see if any data exists.
-        data_file = os.path.join(self.data_dir, self.name_root + ".dat")
+        # Generate or load the data and set self.data
+        # -------------------------------------------
+        data_filename = os.path.join(self.data_dir, 
+            self.name_root + ".dat")
+        my_abscissae = self.gen_abscissae()
 
-        if os.path.isfile(data_file):
-            pass
+        if os.path.isfile(data_filename):
+            # Load data from data_filename.
+            file_data = self.read_data(data_filename)
+            # Compare abscissae in data_filename to my_abscissae.
+            # Throw exception and exit if the abscissae don't match.
+            self.compare_abscissae(my_abscissae, file_data)
+            if args.clobber:
+                # Execute calculator method using my_abscissae.
+                my_data = self.calc_data(my_abscissae)
+                # Set self.data using the data just calculated.
+                self.set_data(my_data)
+            else:
+                # Set self.data using the data loaded from the file.
+                self.set_data(file_data)
         else:
-            pass
+            # Execute calculator method using my_abscissae.
+            my_data = self.calc_data(my_abscissae)
+            # Set self.data using the data just calculated.
+            self.set_data(my_data)
 
-        # Next, I should load that data and check it to see if it matches the abscissa data I'm using to calculate the output I want. If it doesn't pass the check, I should throw an error and exit.
+        # Write data to file (if it wasn't just read from a file)
+        # -------------------------------------------------------
+        if args.clobber:
+            self.write_data(self.data)
+        elif not os.path.isfile(data_filename):
+            self.write_data(self.data)
+
+        # Generate the plot and display it on screen
+        # ------------------------------------------
+        if not args.nodisplay:
+            self.plot_data(self.data)
+
+        # Write the plot image to a file
+        # ------------------------------
+        self.write_plot(self.plot_dir, self.data)
+
 
     def set_name_root(self, name):
         """
