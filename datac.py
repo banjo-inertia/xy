@@ -86,9 +86,9 @@ class main():
         # Write data to file (if it wasn't just read from a file)
         # -------------------------------------------------------
         if args.clobber:
-            self.write_data(self.data)
+            self.write_data(self.data, data_filename)
         elif not os.path.isfile(data_filename):
-            self.write_data(self.data)
+            self.write_data(self.data, data_filename)
 
         # Generate the plot and display it on screen
         # ------------------------------------------
@@ -97,7 +97,7 @@ class main():
 
         # Write the plot image to a file
         # ------------------------------
-        self.write_plot(self.plot_dir, self.data)
+        self.write_plot(self.plot_dir, self.data, args.plot_type)
 
 
     def set_name_root(self, name):
@@ -203,3 +203,53 @@ class main():
             data.append(ordinate_dict)
 
         return data
+
+    def read_data(self, data_filename):
+        """
+        Returns data read from a file.
+
+        :param str data_filename: Full path to the data file.
+        """
+        data_file = open(data_filename, "r")
+        data = json.load(data_file)
+        data_file.close()
+
+        # Is data a list of dicts?
+
+        return data
+
+    def write_data(self, data, data_filename):
+        """
+        Write data to a file.
+
+        :param np.ndarray data: Data to write to the file.
+        :param str data_filename: Full path to the data file.
+        """
+        data_file = open(data_filename, "w")
+        json.dump(data, data_file)
+        data_file.close()
+
+    def compare_abscissae(self, abscissae, full_data):
+        """
+        Return True if each item in abscissae is a subdict of full_data
+
+        :param dict abscissae: List of dicts containing only abscissa and terms (no ordinates) used to instantiate the object with the desired calculator method.
+        :param dict full_data: List of dicts containing abscissa, terms, and ordinates.
+        """
+        # At this point, I'm assuming full_data is a legitimate data set: its a list of dicts.
+
+        if len(abscissae) != len(full_data):
+            # The following exception should be more specific, i.e. I shouldn't just be using some generic parent class exception.
+            raise Exception("Data from file isn't the same length list as the specified abscissae.")
+
+        # I also assume that all the dicts in both list have the same keys. Therefore, if the keys of abscissae aren't a subset of the keys of full_data, an exception should be raised and the program should exit.
+
+        if set(abscissa[0].keys()) <= set(full_data[0].keys()):
+            # Again, I need a real exception.
+            raise Exception("Data from file doesn't have the same abscissa/terms as the specified abscissae.")
+
+        for abscissa, full_datum in zip(abscissae, full_data):
+            for key in abscissa.keys():
+                if abscissa[key] != full_datum[key]:
+                    # Again, use a real exception.
+                    raise Exception("Abscissa or terms from file is not equal to the abscissa or terms from the specified abscissae.")
