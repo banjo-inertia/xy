@@ -131,6 +131,12 @@ class main():
         if not os.path.exists(self.plot_dir):
             raise OSError(1, "Plot directory not found", self.plot_dir)
 
+    def set_data(data):
+        """
+        Sets `data` attribute.
+        """
+        self.data = data
+
 
     def strip_prog_name(self, name, prefix="plot", suffix=None):
         """
