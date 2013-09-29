@@ -19,6 +19,8 @@ class main():
     data_dir: Directory in which data is located/to be written.
     plot_dir: Directory in which the plot image file is to be written.
     data: List of dicts containing the abscissae, ordinates, and fixed terms used calculate the ordinates.
+    abscissa_key: Key in each dict of self.data corresponding to the abscissa.
+    ordinate_key: Key in each dict of self.data corresponding to the ordinate.
     """
 
     def __init__(self):
@@ -76,6 +78,10 @@ class main():
             my_data = self.calc_data(my_abscissae)
             # Set self.data using the data just calculated.
             self.set_data(my_data)
+
+        # Record the names of the abscissa and ordinate.
+        self.set_abscissa_key()
+        self.set_ordinate_key()
 
         # Write data to file (if it wasn't just read from a file)
         # -------------------------------------------------------
