@@ -54,3 +54,14 @@ def write_json(pathname, data):
     :param list data: List of dicts to be written.
     """
     pass
+
+
+def read_json(pathname):
+    """
+    Reads list of dicts from a file in JSON format
+
+    WARNING: This method does not work with relative pathnames.
+
+    :param string pathname: Fully-qualified pathname from which the data will be read.
+    """
+    pass
