@@ -69,4 +69,5 @@ def read_json(pathname):
     :param string pathname: Fully-qualified pathname from which the data will be read.
     :returns: list -- List of dicts containing initialization parameters, abscissae, and ordinates.
     """
-    pass
+    with open(pathname, "r") as f:
+        data = json.load(pathname)
