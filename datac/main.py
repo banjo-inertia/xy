@@ -2,7 +2,7 @@
 import copy
 
 
-def init_abscissa(abscissae, abscissa_name, params = {}):
+def generate_abscissae(abscissae, abscissa_name, params = {}):
     """
     List of dicts to initialize object w/ calc method
 
@@ -23,7 +23,7 @@ def init_abscissa(abscissae, abscissa_name, params = {}):
     return dict_list
 
 
-def ordinate_list(class_name, method_name, abscissae):
+def generate_ordinates(class_name, method_name, abscissae):
     """
     List of dicts including abscissa and ordinate data
 
