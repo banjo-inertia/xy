@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import copy
 
+
 def init_abscissa(abscissae, abscissa_name, params = {}):
     """
     List of dicts to initialize object w/ calc method
@@ -17,6 +18,27 @@ def init_abscissa(abscissae, abscissa_name, params = {}):
         param_dict = copy.copy(params)
         param_dict[abscissa_name] = abscissa
         param_dict["abscissa_name"] = abscissa_name
+        dict_list.append(param_dict)
+
+    return dict_list
+
+
+def ordinate_list(class_name, method_name, abscissae):
+    """
+    List of dicts including abscissa and ordinate data
+
+    This method generates a list of dicts which include an ordinate, abscissa, and any other static data required to perform the calculation to generate the ordinate.
+
+    :param string class_name: Class featuring ordinate generating calculator method.
+    :param string method_name: Name of method used to calculate the ordinate.
+    :param list abscissae: List of dicts required to initialize an object containing the desired calculator method.
+    """
+    dict_list = []
+
+    for params in abscissae:
+        param_dict = copy.copy(params)
+        # Code to generate and add ordinate to `param_dict`
+        param_dict["ordinate_name"] = method_name
         dict_list.append(param_dict)
 
     return dict_list
