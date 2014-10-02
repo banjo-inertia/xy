@@ -25,22 +25,28 @@ def generate_abscissae(abscissae, abscissa_name, params = {}):
     return dict_list
 
 
-def generate_ordinates(abscissae, class_name, method_name):
+def generate_ordinates(abscissae, cls, method_name):
     """
     List of dicts including abscissa and ordinate data
 
     This method generates a list of dicts which include an ordinate, abscissa, and any other static data required to perform the calculation to generate the ordinate.
 
-    :param string class_name: Class featuring ordinate generating calculator method.
-    :param string method_name: Name of method used to calculate the ordinate.
     :param list abscissae: List of dicts required to initialize an object containing the desired calculator method.
+    :param class cls: Class featuring ordinate generating calculator method.
+    :param string method_name: Name of method used to calculate the ordinate.
     :returns: list -- List of dicts containing initialization parameters, abscissae, and ordinates.
     """
     dict_list = []
 
     for params in abscissae:
         param_dict = copy.copy(params)
-        # Code to generate and add ordinate to `param_dict`
+
+        # Instantiate object with parameters and abscissa
+        ob = cls(param_dict)
+        
+        # Call method specified by `method_name` and add it to the dictionary
+        param_dict[method_name] = getattr(ob, method_name)()
+
         param_dict["ordinate_name"] = method_name
         dict_list.append(param_dict)
 
