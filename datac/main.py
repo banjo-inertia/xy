@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import copy
+import json
 
 
 def generate_abscissae(abscissae, abscissa_name, params = {}):
@@ -53,7 +54,8 @@ def write_json(pathname, data):
     :param string pathname: Fully-qualified pathname to which the data will be written.
     :param list data: List of dicts to be written.
     """
-    pass
+    with open(pathname, "w") as f:
+        f.write(json.dumps(data, indent = 2))
 
 
 def read_json(pathname):
