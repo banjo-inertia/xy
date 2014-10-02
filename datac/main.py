@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import copy
 
-def init_abscissa(params, abscissae, abscissa_name):
+def init_abscissa(abscissae, abscissa_name, params = {}):
     """
     List of dicts to initialize object w/ calc method
 
