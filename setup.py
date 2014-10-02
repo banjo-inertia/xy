@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from distutils.core import setup
+import datac
 
 setup(name = "datac",
       version = datac.__version__,
