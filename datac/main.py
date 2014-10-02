@@ -57,7 +57,7 @@ def write_json(pathname, data):
     :param list data: List of dicts to be written.
     """
     with open(pathname, "w") as f:
-        f.write(json.dumps(data, indent = 2))
+        json.dump(data, f, indent = 2)
 
 
 def read_json(pathname):
