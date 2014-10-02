@@ -42,3 +42,15 @@ def ordinate_list(class_name, method_name, abscissae):
         dict_list.append(param_dict)
 
     return dict_list
+    
+
+def write_json(pathname, data):
+    """
+    Writes list of dicts to a file in JSON format
+
+    WARNING: This method will overwrite any file found at `pathname`. This method also does not work with relative pathnames.
+
+    :param string pathname: Fully-qualified pathname to which the data will be written.
+    :param list data: List of dicts to be written.
+    """
+    pass
