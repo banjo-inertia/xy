@@ -12,6 +12,7 @@ def generate_abscissae(abscissae, abscissa_name, params = {}):
     :param dict params: Static parameters required to initialize the object featuring the ordinate calculator method.
     :param list abscissae: Independent variable also required to initialize object featuring the ordinate calculator method.
     :param str abscissa_name: Dictionary key for the abscissa name.
+    :returns: list -- List of dicts containing initialization parameters and abscissae.
     """
     dict_list = []
 
@@ -33,6 +34,7 @@ def generate_ordinates(abscissae, class_name, method_name):
     :param string class_name: Class featuring ordinate generating calculator method.
     :param string method_name: Name of method used to calculate the ordinate.
     :param list abscissae: List of dicts required to initialize an object containing the desired calculator method.
+    :returns: list -- List of dicts containing initialization parameters, abscissae, and ordinates.
     """
     dict_list = []
 
@@ -65,5 +67,6 @@ def read_json(pathname):
     WARNING: This method does not work with relative pathnames.
 
     :param string pathname: Fully-qualified pathname from which the data will be read.
+    :returns: list -- List of dicts containing initialization parameters, abscissae, and ordinates.
     """
     pass
