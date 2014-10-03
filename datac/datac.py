@@ -26,6 +26,11 @@ class Datac(object):
     def abscissa_name(self):
         return self._abscissa_name
 
+    @property
+    def ordinates(self):
+        return self._ordinates
+        
+
     def __init__(self, params, abscissae, abscissa_name, calc_method = None):
 
         # Type checking on the way in
