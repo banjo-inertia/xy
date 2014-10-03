@@ -130,6 +130,16 @@ class API(unittest.TestCase):
         except:
             self.fail("Should be able to set calc_method after default instantiation")
 
+    def test_ordinants_exist_after_set_calc_method(self):
+        """
+        The Datac ordinants attribute should exist once calc_method has been set after default instantiation
+        """
+        self.test_obj.calc_method = Test_Class.calc_method
+        try:
+            self.test_obj.ordinates
+        except AttributeError:
+            self.fail("Datac ordinates property should exist")
+
 
 if __name__ == "__main__":
     test_obj = datac.Datac(params, abscissae, abscissa_name)
