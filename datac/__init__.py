@@ -6,6 +6,6 @@ Base Library (:mod:`datac`)
 .. currentmodule:: datac
 """
 
-from main import *
+from datac import Datac
 
 __version__ = "0.1.0"
