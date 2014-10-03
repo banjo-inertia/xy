@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import copy
+
 
 class Datac(object):
     """
@@ -16,3 +18,26 @@ class Datac(object):
         self.params = params
         self.abscissae = abscissae
         self.abscissa_name = abscissa_name
+        self.calc_method = calc_method
+
+        self.generate_ordinates()
+        
+
+    def generate_ordinates(self):
+        """
+        Calculate and add list of ordinates to object
+        """
+        ordinates = []
+
+        for abscissa in self.abscissae:
+            # Create dict of params and abscissa to instantiate object which features ordinate calculator method.
+            params = copy.copy(self.params)
+            params[self.abscissa_name] = abscissa
+
+            # Initialize object, call calculator method.
+            ob = self.calc_method.im_class(params)
+            ordinate = getattr(ob, self.calc_method.__name__)()
+
+            ordinates.append(ordinate)
+
+        self.ordinates = ordinates
