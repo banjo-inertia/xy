@@ -48,9 +48,9 @@ class Instantiation(unittest.TestCase):
         """
         self.assertRaises(TypeError, datac.Datac, params, "string", abscissa_name)
 
-    def test_abscissae_name_non_string(self):
+    def test_abscissa_name_non_string(self):
         """
-        Datac instantiation should fail if abscissae_name is not a string
+        Datac instantiation should fail if abscissa_name is not a string
         """
         self.assertRaises(TypeError, datac.Datac, params, abscissae, None)
 
