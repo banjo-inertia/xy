@@ -29,6 +29,15 @@ class Datac(object):
     @property
     def ordinates(self):
         return self._ordinates
+
+    @property 
+    def calc_method(self):
+        return self._calc_method
+
+    @calc_method.setter
+    def calc_method(self, value):
+        self._calc_method = value
+        self.calc_ordinates()
         
 
     def __init__(self, params, abscissae, abscissa_name, calc_method = None):
@@ -53,7 +62,7 @@ class Datac(object):
         self._params = params
         self._abscissae = abscissae
         self._abscissa_name = abscissa_name
-        self.calc_method = calc_method
+        self._calc_method = calc_method
 
         if calc_method:
             self.calc_ordinates()
