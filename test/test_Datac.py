@@ -2,9 +2,28 @@
 import unittest
 import datac
 
-params = {"fake": 1.}
+params = {"slope": 2.,
+          "y_intercept": 1.}
 abscissae = [1, 2]
 abscissa_name = "abscissa"
+
+
+class Test_Class(object):
+    """
+    Dummy class to test Datac functionality
+
+    Implements a line.
+    """
+    def __init__(self, params):
+        self.slope = params["slope"]
+        self.y_intercept = params["y_intercept"]
+        self.abscissa = params["abscissa"]
+
+    def calc_method(self):
+        """
+        Calculator method
+        """
+        return self.slope * self.abscissa + self.y_intercept
 
 
 class Instantiation(unittest.TestCase):
@@ -34,6 +53,16 @@ class Instantiation(unittest.TestCase):
         Datac instantiation should fail if abscissae_name is not a string
         """
         self.assertRaises(TypeError, datac.Datac, params, abscissae, None)
+
+    def test_ordinates_exist_with_calc_method(self):
+        """
+        Datac ordinates property should exist if object instantiated with calc_method
+        """
+        test_obj = datac.Datac(params, abscissae, abscissa_name, Test_Class.calc_method)
+        try:
+            test_obj.ordinates
+        except AttributeError:
+            self.fail("Datac ordinates property should exist")
 
 
 class API(unittest.TestCase):
