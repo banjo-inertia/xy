@@ -140,6 +140,12 @@ class API(unittest.TestCase):
         except AttributeError:
             self.fail("Datac ordinates property should exist")
 
+    def test_set_calc_method_non_instancemethod_after_default_instantiation(self):
+        """
+        Setting calc_method after default instantiation should fail if value is not an instancemethod
+        """
+        self.assertRaises(TypeError, setattr, self.test_obj, "calc_method", "string")
+
 
 if __name__ == "__main__":
     test_obj = datac.Datac(params, abscissae, abscissa_name)
