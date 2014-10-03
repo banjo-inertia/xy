@@ -71,7 +71,10 @@ class Datac(object):
             params[self.abscissa_name] = abscissa
 
             # Initialize object, call calculator method.
-            ob = self.calc_method.im_class(params)
+            try:
+                ob = self.calc_method.im_class(params)
+            except:
+                raise TypeError("Problem calling calc_method")
             ordinate = getattr(ob, self.calc_method.__name__)()
 
             ordinates.append(ordinate)
