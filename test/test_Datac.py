@@ -76,3 +76,5 @@ class API(unittest.TestCase):
 
         self.assertRaises(AttributeError, setattr, self.test_obj, "abscissa_name", legit_abscissa_name)
 
+if __name__ == "__main__":
+    test_obj = datac.Datac(params, abscissae, abscissa_name)
