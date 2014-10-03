@@ -120,5 +120,16 @@ class API(unittest.TestCase):
         self.assertRaises(AttributeError, setattr, self.test_obj, "ordinates", legit_ordinates)
 
 
+    # Set `calc_method` after instantiation.
+    def test_set_calc_method_after_default_instantiation(self):
+        """
+        Setting calc_method after default instantiation should be possible
+        """
+        try:
+            self.test_obj.calc_method = Test_Class.calc_method
+        except:
+            self.fail("Should be able to set calc_method after default instantiation")
+
+
 if __name__ == "__main__":
     test_obj = datac.Datac(params, abscissae, abscissa_name)
