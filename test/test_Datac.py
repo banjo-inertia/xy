@@ -154,6 +154,13 @@ class API(unittest.TestCase):
 
         self.assertRaises(AttributeError, setattr, test_obj, "calc_method", Test_Class.calc_method)
 
+    def test_calc_method_read_only_default_instantiation_post_set(self):
+        """
+        The Datac calc_method should be read-only if it has been specified, even after instantiation.
+        """
+        self.test_obj.calc_method = Test_Class.calc_method
+
+        self.assertRaises(AttributeError, setattr, self.test_obj, "calc_method", Test_Class.calc_method)
 
 if __name__ == "__main__":
     test_obj = datac.Datac(params, abscissae, abscissa_name)
