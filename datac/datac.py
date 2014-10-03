@@ -14,14 +14,14 @@ class Datac(object):
     :param instancemethod calc_method: Instance method of a class which implements the calculator method used to determine the ordinates of the data.
     """
 
-    def __init__(self, params, abscissae, abscissa_name, calc_method):
+    def __init__(self, params, abscissae, abscissa_name, calc_method = None):
         self.params = params
         self.abscissae = abscissae
         self.abscissa_name = abscissa_name
         self.calc_method = calc_method
 
-        self.generate_ordinates()
-        
+        # self.generate_ordinates()
+
 
     def generate_ordinates(self):
         """
