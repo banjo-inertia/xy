@@ -55,10 +55,11 @@ class Datac(object):
         self._abscissa_name = abscissa_name
         self.calc_method = calc_method
 
-        # self.generate_ordinates()
+        if calc_method:
+            self.calc_ordinates()
 
 
-    def generate_ordinates(self):
+    def calc_ordinates(self):
         """
         Calculate and add list of ordinates to object
         """
@@ -75,4 +76,4 @@ class Datac(object):
 
             ordinates.append(ordinate)
 
-        self.ordinates = ordinates
+        self._ordinates = ordinates
