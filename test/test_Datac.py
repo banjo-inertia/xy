@@ -2,6 +2,11 @@
 import unittest
 import datac
 
+params = {"fake": 1.}
+abscissae = [1, 2]
+abscissa_name = "abscissa"
+
+
 class Instantiation(unittest.TestCase):
     """
     Test instantiation works according to spec
@@ -10,41 +15,25 @@ class Instantiation(unittest.TestCase):
         """
         Datac instantiation should fail is params is not a dict
         """
-        params = None
-        abscissae = [1,2]
-        abscissa_name = "abscissa"
-
-        self.assertRaises(TypeError, datac.Datac, params, abscissae, abscissa_name)
+        self.assertRaises(TypeError, datac.Datac, None, abscissae, abscissa_name)
 
     def test_abscissae_non_iterable(self):
         """
         Datac instantiation should fail if abscissae is not iterable
         """
-        params = {"fake": 1.}
-        abscissae = None
-        abscissa_name = "abscissa"
-
-        self.assertRaises(TypeError, datac.Datac, params, abscissae, abscissa_name)
+        self.assertRaises(TypeError, datac.Datac, params, None, abscissa_name)
 
     def test_abscissae_string(self):
         """
         Datac instantiation should fail if abscissae is a string
         """
-        params = {"fake": 1.}
-        abscissae = "a string!"
-        abscissa_name = "abscissa"
-
-        self.assertRaises(TypeError, datac.Datac, params, abscissae, abscissa_name)
+        self.assertRaises(TypeError, datac.Datac, params, "string", abscissa_name)
 
     def test_abscissae_name_non_string(self):
         """
         Datac instantiation should fail if abscissae_name is not a string
         """
-        params = {"fake": 1.}
-        abscissae = [1, 2]
-        abscissa_name = None
-
-        self.assertRaises(TypeError, datac.Datac, params, abscissae, abscissa_name)
+        self.assertRaises(TypeError, datac.Datac, params, abscissae, None)
 
 
 class API(unittest.TestCase):
@@ -55,10 +44,6 @@ class API(unittest.TestCase):
         """
         Create a Datac object for testing
         """
-        params = {"fake": 1.}
-        abscissae = [1, 2]
-        abscissa_name = "abscissa"
-
         self.test_obj = datac.Datac(params, abscissae, abscissa_name)
 
     def tearDown(self):
