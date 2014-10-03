@@ -76,5 +76,14 @@ class API(unittest.TestCase):
 
         self.assertRaises(AttributeError, setattr, self.test_obj, "abscissa_name", legit_abscissa_name)
 
+    def test_ordinates_read_only(self):
+        """
+        The ordinates attribute should be read-only
+        """
+        legit_ordinates = [1,2]
+
+        self.assertRaises(AttributeError, setattr, self.test_obj, "ordinates", legit_ordinates)
+
+
 if __name__ == "__main__":
     test_obj = datac.Datac(params, abscissae, abscissa_name)
