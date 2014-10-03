@@ -13,7 +13,7 @@ class Datac(object):
     :param str abscissa_name: Dictionary key for the abscissa name.
     :param instancemethod calc_method: Instance method of a class which implements the calculator method used to determine the ordinates of the data.
     """
-
+    # Many of the object's attributes should be read-only.
     @property
     def params(self):
         return self._params
@@ -30,14 +30,18 @@ class Datac(object):
     def ordinates(self):
         return self._ordinates
 
-    @property 
+    # Setting the `calc_method` attribute is valid if it wasn't set during instantiation. However, the `calc_method` property has set-once behavior.
+    @property
     def calc_method(self):
         return self._calc_method
 
     @calc_method.setter
     def calc_method(self, value):
-        self._calc_method = value
-        self.calc_ordinates()
+        if self._calc_method:
+            raise AttributeError("calc_method cannot be changed once it has been set")
+        else:
+            self._calc_method = value
+            self.calc_ordinates()
         
 
     def __init__(self, params, abscissae, abscissa_name, calc_method = None):
