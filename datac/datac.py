@@ -14,6 +14,18 @@ class Datac(object):
     :param instancemethod calc_method: Instance method of a class which implements the calculator method used to determine the ordinates of the data.
     """
 
+    @property
+    def params(self):
+        return self._params
+
+    @property
+    def abscissae(self):
+        return self._abscissae
+
+    @property
+    def abscissa_name(self):
+        return self._abscissa_name
+
     def __init__(self, params, abscissae, abscissa_name, calc_method = None):
 
         # Type checking on the way in
@@ -33,9 +45,9 @@ class Datac(object):
         if type(abscissa_name) is not str:
             raise TypeError("abscissa_name must be a string")
 
-        self.params = params
-        self.abscissae = abscissae
-        self.abscissa_name = abscissa_name
+        self._params = params
+        self._abscissae = abscissae
+        self._abscissa_name = abscissa_name
         self.calc_method = calc_method
 
         # self.generate_ordinates()
