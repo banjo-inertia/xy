@@ -15,6 +15,24 @@ class Datac(object):
     """
 
     def __init__(self, params, abscissae, abscissa_name, calc_method = None):
+
+        # Type checking on the way in
+        # params
+        if type(params) is not dict:
+            raise TypeError("params must be a dict")
+
+        # abscissae
+        if type(abscissae) is str:
+            raise TypeError("abscissae cannot be a string")
+        try:
+            iterator = iter(abscissae)
+        except TypeError:
+            raise TypeError("abscissae must be iterable")
+
+        # abscissa_name
+        if type(abscissa_name) is not str:
+            raise TypeError("abscissa_name must be a string")
+
         self.params = params
         self.abscissae = abscissae
         self.abscissa_name = abscissa_name
