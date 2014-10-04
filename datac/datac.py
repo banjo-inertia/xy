@@ -72,6 +72,31 @@ class Datac(object):
             self.calc_ordinates()
 
 
+    def _to_dict(self):
+        """
+        Map object's data unambiguously to dict
+
+        Data from the object is represented in the dictionary returned by this method according to the following rules.
+
+        * Key/value pairs of the `params` dict SHALL map to key/value pairs in the returned dict.
+        * The list stored in the `abscissae` attribute SHALL be stored in the returned dict with key "abscissae".
+        * If they exist, the list stored in the `ordinates` attribute SHALL be stored in the returned dict with key "ordinates". Otherwise this field will not appear in the returned dict.
+        * The `abscissa_name` attribute SHALL be stored in the returned dict with key "abscissa_name".
+        * If the value stored in the object's `calc_method` attribute is not `None`, it SHALL be converted to a string, and that string stored in the returned dict with key "ordinate_name". Otherwise this field will not appear in the returned dict.
+        """
+        obj_dict = copy.copy(self.params)
+        obj_dict["abscissae"] = self.abscissae
+        try:
+            obj_dict["ordinates"] = self.ordinates
+        except:
+            pass
+        obj_dict["abscissa_name"] = self.abscissa_name
+        if self.calc_method:
+            obj_dict["ordinate_name"] = str(self.calc_method)
+
+        return obj_dict
+
+
     def calc_ordinates(self):
         """
         Calculate and add list of ordinates to object
