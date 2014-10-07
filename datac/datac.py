@@ -97,6 +97,11 @@ class Datac(object):
         return obj_dict
 
 
+    def __iter__(self):
+        obj_dict = self._to_dict()
+        return obj_dict.iteritems()
+
+
     def calc_ordinates(self):
         """
         Calculate and add list of ordinates to object
