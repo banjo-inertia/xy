@@ -164,3 +164,11 @@ class Datac(object):
         fig = plt.figure()
         plt.plot(self.abscissae, self.ordinates)
         return fig
+
+
+    def show(self):
+        """
+        Display simplest abscissae vs. ordinate plot
+        """
+        fig = self.plot()
+        plt.show()
