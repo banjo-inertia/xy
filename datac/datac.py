@@ -102,6 +102,14 @@ class Datac(object):
         return obj_dict.iteritems()
 
 
+    def __repr__(self):
+        """
+        String representation of object's dictionary representation
+        """
+        obj_dict = self._to_dict()
+        return str(obj_dict)
+
+
     def calc_ordinates(self):
         """
         Calculate and add list of ordinates to object
