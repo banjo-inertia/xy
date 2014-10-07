@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import copy
+import json
 
 
 class Datac(object):
@@ -131,3 +132,25 @@ class Datac(object):
             ordinates.append(ordinate)
 
         self._ordinates = ordinates
+
+
+    def dump(self, **kwargs):
+        """
+        Wrapper for json.dump
+
+        It is assumed that `self` is passed to the `obj` argument of `json.dump`.
+
+        :param **kwargs: Arguments passed through to the `json.dump` command.
+        """
+        json.dump(dict(self), **kwargs)
+
+
+    def dumps(self, **kwargs):
+        """
+        Wrapper for json.dumps
+
+        It is assumed that `self` is passed to the `obj` argument of `json.dumps`.
+
+        :param **kwargs: Arguments passed through to the `json.dumps` command.
+        """
+        return json.dumps(dict(self), **kwargs)
