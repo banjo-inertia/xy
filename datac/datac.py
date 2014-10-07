@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import copy
 import json
+import matplotlib.pyplot as plt
 
 
 class Datac(object):
@@ -154,3 +155,12 @@ class Datac(object):
         :param **kwargs: Arguments passed through to the `json.dumps` command.
         """
         return json.dumps(dict(self), **kwargs)
+
+
+    def plot(self):
+        """
+        Return matplotlib.figure.Figure plotting abscissae vs. ordinates
+        """
+        fig = plt.figure()
+        plt.plot(self.abscissae, self.ordinates)
+        return fig
