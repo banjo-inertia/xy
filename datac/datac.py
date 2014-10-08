@@ -172,3 +172,16 @@ class Datac(object):
         """
         fig = self.plot()
         plt.show()
+
+
+    def savefig(self, *args, **kwargs):
+        """
+        Wrapper for matplotlib.pyplot.savefig
+
+        Plots abscissae vs ordinates.
+
+        :param *args: Arguments passed through to the `matplotlib.pyplot.savefig` command.
+        :param **kwargs: Arguments passed through to the `matplotlib.pyplot.savefig` command.
+        """
+        self.plot()
+        plt.savefig(*args, **kwargs)
