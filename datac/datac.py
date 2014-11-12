@@ -2,6 +2,8 @@
 import copy
 import json
 import matplotlib.pyplot as plt
+from astropy import units
+from numbers import Number
 
 
 class Datac(object):
@@ -116,7 +118,7 @@ class Datac(object):
         """
         Calculate and add list of ordinates to object
         """
-        ordinates = []
+        ordinates_list = []
 
         for abscissa in self.abscissae:
             # Create dict of params and abscissa to instantiate object which features ordinate calculator method.
@@ -130,9 +132,42 @@ class Datac(object):
                 raise TypeError("Problem calling calc_method")
             ordinate = getattr(ob, self.calc_method.__name__)()
 
-            ordinates.append(ordinate)
+            ordinates_list.append(ordinate)
+
+        ordinates = self._to_array(ordinates_list)
 
         self._ordinates = ordinates
+
+
+    def _to_array(self, ordinates_list):
+        """
+        Convert a list to a numpy array
+
+        :param list ordinates_list: List of ordinate values.
+
+        Examines a list to see if the elements are of type `astropy.units.Quantity`; if so, the method returns a corresponding array-like object which is of type `astropy.units.Quantity`.
+        """
+        if isinstance(ordinates_list[0], Number):
+            return ordinates_list
+
+        if not self._identical_units(ordinates_list):
+            error_msg = "ordinates_list does not have consistent units."
+            raise ValueError(error_msg)
+
+        values = [ordinate.value for ordinate in ordinates_list]
+        unit = ordinates_list[0].unit
+        ordinates = units.Quantity(values, unit)
+
+        return ordinates
+
+
+    def _identical_units(self, ordinates_list):
+        """
+        Return True if all units in list are consistent
+
+        :param list ordinates_list: List of ordinate values where each element is an `astropy.units.Quantity`.
+        """
+        return all([ordinate.unit == ordinates_list[0].unit for ordinate in ordinates_list])
 
 
     def dump(self, **kwargs):
