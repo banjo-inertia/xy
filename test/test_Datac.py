@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 import datac
+from astropy import units
 
 params = {"slope": 2.,
           "y_intercept": 1.}
@@ -24,6 +25,12 @@ class Test_Class(object):
         Calculator method
         """
         return self.slope * self.abscissa + self.y_intercept
+
+    def calc_method_quantity(self):
+        """
+        Returns a value of type `astropy.units.Quantity`
+        """
+        return units.Quantity(1., "V")
 
 
 class Instantiation(unittest.TestCase):
@@ -161,6 +168,25 @@ class API(unittest.TestCase):
         self.test_obj.calc_method = Test_Class.calc_method
 
         self.assertRaises(AttributeError, setattr, self.test_obj, "calc_method", Test_Class.calc_method)
+
+
+class Bugs(unittest.TestCase):
+    """
+    Test cases which exposed bugs.
+    """
+    def test_calc_method_returns_Quantity(self):
+        """
+        Issue #19
+
+        The `Datac.plot` method would fail if the `calc_method` returned a value of type `astropy.units.Quantity`.
+        """
+        test_obj = datac.Datac(params, abscissae, abscissa_name, Test_Class.calc_method_quantity)
+        try:
+            test_obj.plot()
+        except ValueError:
+            self.fail("Plotting shouldn't fail when calc_method returns Quantity.")
+
+
 
 if __name__ == "__main__":
     test_obj = datac.Datac(params, abscissae, abscissa_name)
