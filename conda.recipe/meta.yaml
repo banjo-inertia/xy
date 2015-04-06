@@ -11,7 +11,11 @@ about:
     summary: Utility for managing 2D data
 
 source:
-    path: ..
+    git_url: ..
+
+build:
+    # noarch_python: True
+    string: {{ environ.get('GIT_BUILD_STR', '') }}
 
 requirements:
     build:
