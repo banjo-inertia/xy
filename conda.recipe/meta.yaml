@@ -20,8 +20,12 @@ build:
 requirements:
     build:
         - python
+        - matplotlib
+        - astropy
     run:
         - python
+        - matplotlib
+        - astropy
 
 test:
     files:
