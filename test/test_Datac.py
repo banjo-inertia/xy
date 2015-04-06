@@ -122,7 +122,7 @@ class API(unittest.TestCase):
         """
         The ordinates attribute should be read-only
         """
-        legit_ordinates = [1,2]
+        legit_ordinates = [1, 2]
 
         self.assertRaises(AttributeError, setattr, self.test_obj, "ordinates", legit_ordinates)
 

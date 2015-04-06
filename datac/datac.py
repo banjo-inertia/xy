@@ -46,9 +46,9 @@ class Datac(object):
         else:
             self._calc_method = value
             self.calc_ordinates()
-        
 
-    def __init__(self, params, abscissae, abscissa_name, calc_method = None):
+
+    def __init__(self, params, abscissae, abscissa_name, calc_method=None):
 
         # Type checking on the way in
         # params
