@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-import copy
-import json
 import matplotlib.pyplot as plt
-from astropy import units
-from numbers import Number
 
 
 class Datac(object):
@@ -77,32 +73,26 @@ class Datac(object):
         self.abscissa_name = abscissa_name
         self.calc_method = calc_method
 
-        self._ordinates = self.calc_ordinates()
+        self._ordinates = self._calc_ordinates()
 
 
-    def calc_ordinates(self):
+    def _calc_ordinates(self):
         """
         Calculate and add list of ordinates to object
         """
-        ordinates_list = []
+        # Decompose the params into (key, val) tuples and generate a
+        # list of dicts used to instantiate the object defined by 
+        # `calc_method`. The following could be done in one line, but
+        # I split it for clarity.
+        params_items = self.params.items()
+        abscissae_dicts = [dict(params_items + [(self.abscissa_name, abscissa)]) for abscissa in self.abscissae]
 
-        for abscissa in self.abscissae:
-            # Create dict of params and abscissa to instantiate object which features ordinate calculator method.
-            params = copy.copy(self.params)
-            params[self.abscissa_name] = abscissa
+        try:
+            ordinates = [self.calc_method(**abscissae_dict) for abscissae_dict in abscissae_dicts]
+        except:
+            raise TypeError("Problem calling calc_method")
 
-            # Initialize object, call calculator method.
-            try:
-                ob = self.calc_method.im_class(params)
-            except:
-                raise TypeError("Problem calling calc_method")
-            ordinate = getattr(ob, self.calc_method.__name__)()
-
-            ordinates_list.append(ordinate)
-
-        ordinates = self._to_array(ordinates_list)
-
-        self._ordinates = ordinates
+        return ordinates
 
 
     def plot(self):
