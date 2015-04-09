@@ -80,44 +80,6 @@ class Datac(object):
         self._ordinates = self.calc_ordinates()
 
 
-    def _to_dict(self):
-        """
-        Map object's data unambiguously to dict
-
-        Data from the object is represented in the dictionary returned by this method according to the following rules.
-
-        * Key/value pairs of the `params` dict SHALL map to key/value pairs in the returned dict.
-        * The list stored in the `abscissae` attribute SHALL be stored in the returned dict with key "abscissae".
-        * If they exist, the list stored in the `ordinates` attribute SHALL be stored in the returned dict with key "ordinates". Otherwise this field will not appear in the returned dict.
-        * The `abscissa_name` attribute SHALL be stored in the returned dict with key "abscissa_name".
-        * If the value stored in the object's `calc_method` attribute is not `None`, it SHALL be converted to a string, and that string stored in the returned dict with key "ordinate_name". Otherwise this field will not appear in the returned dict.
-        """
-        obj_dict = copy.copy(self.params)
-        obj_dict["abscissae"] = self.abscissae
-        try:
-            obj_dict["ordinates"] = self.ordinates
-        except:
-            pass
-        obj_dict["abscissa_name"] = self.abscissa_name
-        if self.calc_method:
-            obj_dict["ordinate_name"] = str(self.calc_method)
-
-        return obj_dict
-
-
-    def __iter__(self):
-        obj_dict = self._to_dict()
-        return obj_dict.iteritems()
-
-
-    def __repr__(self):
-        """
-        String representation of object's dictionary representation
-        """
-        obj_dict = self._to_dict()
-        return str(obj_dict)
-
-
     def calc_ordinates(self):
         """
         Calculate and add list of ordinates to object
@@ -141,59 +103,6 @@ class Datac(object):
         ordinates = self._to_array(ordinates_list)
 
         self._ordinates = ordinates
-
-
-    def _to_array(self, ordinates_list):
-        """
-        Convert a list to a numpy array
-
-        :param list ordinates_list: List of ordinate values.
-
-        Examines a list to see if the elements are of type `astropy.units.Quantity`; if so, the method returns a corresponding array-like object which is of type `astropy.units.Quantity`.
-        """
-        if isinstance(ordinates_list[0], Number):
-            return ordinates_list
-
-        if not self._identical_units(ordinates_list):
-            error_msg = "ordinates_list does not have consistent units."
-            raise ValueError(error_msg)
-
-        values = [ordinate.value for ordinate in ordinates_list]
-        unit = ordinates_list[0].unit
-        ordinates = units.Quantity(values, unit)
-
-        return ordinates
-
-
-    def _identical_units(self, ordinates_list):
-        """
-        Return True if all units in list are consistent
-
-        :param list ordinates_list: List of ordinate values where each element is an `astropy.units.Quantity`.
-        """
-        return all([ordinate.unit == ordinates_list[0].unit for ordinate in ordinates_list])
-
-
-    def dump(self, **kwargs):
-        """
-        Wrapper for json.dump
-
-        It is assumed that `self` is passed to the `obj` argument of `json.dump`.
-
-        :param **kwargs: Arguments passed through to the `json.dump` command.
-        """
-        json.dump(dict(self), **kwargs)
-
-
-    def dumps(self, **kwargs):
-        """
-        Wrapper for json.dumps
-
-        It is assumed that `self` is passed to the `obj` argument of `json.dumps`.
-
-        :param **kwargs: Arguments passed through to the `json.dumps` command.
-        """
-        return json.dumps(dict(self), **kwargs)
 
 
     def plot(self):
