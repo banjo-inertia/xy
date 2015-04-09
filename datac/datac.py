@@ -48,7 +48,7 @@ class Datac(object):
             self.calc_ordinates()
 
 
-    def __init__(self, params, abscissae, abscissa_name, calc_method=None):
+    def __init__(self, params, abscissae, abscissa_name, calc_method):
 
         # Type checking on the way in
         # params
@@ -72,8 +72,7 @@ class Datac(object):
         self._abscissa_name = abscissa_name
         self._calc_method = calc_method
 
-        if calc_method:
-            self.calc_ordinates()
+        self.calc_ordinates()
 
 
     def _to_dict(self):
