@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+import collections
 import matplotlib.pyplot as plt
 
 
-class Datac(object):
+class Datac(collections.Sequence):
     """
     Model of 2D data with static parameters
 
@@ -25,10 +26,10 @@ class Datac(object):
 
     @abscissa_name.setter
     def abscissa_name(self, value):
-        if self._abscissa_name:
+        if hasattr(self, "_abscissa_name"):
             raise AttributeError("abscissa_name is read-only")
         else:
-            if type(abscissa_name) is not str:
+            if type(value) is not str:
                 raise TypeError("abscissa_name must be a string")
             self._abscissa_name = value
 
@@ -39,11 +40,11 @@ class Datac(object):
 
     @abscissae.setter
     def abscissae(self, value):
-        if self._abscissae:
+        if hasattr(self, "_abscissae"):
             raise AttributeError("abscissae is read-only")
         else:
             try:
-                iterator = iter(abscissae)
+                iterator = iter(value)
             except TypeError:
                 raise TypeError("abscissae must be iterable")
             self._abscissae = value
@@ -55,7 +56,7 @@ class Datac(object):
 
     @calc_method.setter
     def calc_method(self, value):
-        if self._calc_method:
+        if hasattr(self, "_calc_method"):
             raise AttributeError("calc_method is read-only")
         else:
             self._calc_method = value
@@ -72,23 +73,26 @@ class Datac(object):
         self.abscissae = abscissae
         self.abscissa_name = abscissa_name
         self.calc_method = calc_method
-
         self._ordinates = self._calc_ordinates()
+
+    def __getitem__(self, index):
+        val = self.params.copy()
+        val.update({self.abscissa_name: self.abscissae[index]})
+        if hasattr(self, "_ordinates"):
+            val.update({self.calc_method.__name__: self.ordinates[index]})
+
+        return val
+
+    def __len__(self):
+        return len(self.abscissae)
 
 
     def _calc_ordinates(self):
         """
         Calculate and add list of ordinates to object
         """
-        # Decompose the params into (key, val) tuples and generate a
-        # list of dicts used to instantiate the object defined by 
-        # `calc_method`. The following could be done in one line, but
-        # I split it for clarity.
-        params_items = self.params.items()
-        abscissae_dicts = [dict(params_items + [(self.abscissa_name, abscissa)]) for abscissa in self.abscissae]
-
         try:
-            ordinates = [self.calc_method(**abscissae_dict) for abscissae_dict in abscissae_dicts]
+            ordinates = [self.calc_method(**abscissae_dict) for abscissae_dict in self]
         except:
             raise TypeError("Problem calling calc_method")
 
