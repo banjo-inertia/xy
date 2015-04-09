@@ -22,19 +22,37 @@ class Datac(object):
     def params(self):
         return self._params
 
-    @property
-    def abscissae(self):
-        return self._abscissae
 
     @property
     def abscissa_name(self):
         return self._abscissa_name
 
-    @property
-    def ordinates(self):
-        return self._ordinates
+    @abscissa_name.setter
+    def abscissa_name(self, value):
+        if self._abscissa_name:
+            raise AttributeError("abscissa_name is read-only")
+        else:
+            if type(abscissa_name) is not str:
+                raise TypeError("abscissa_name must be a string")
+            self._abscissa_name = value
 
-    # Setting the `calc_method` attribute is valid if it wasn't set during instantiation. However, the `calc_method` property has set-once behavior.
+
+    @property
+    def abscissae(self):
+        return self._abscissae
+
+    @abscissae.setter
+    def abscissae(self, value):
+        if self._abscissae:
+            raise AttributeError("abscissae is read-only")
+        else:
+            try:
+                iterator = iter(abscissae)
+            except TypeError:
+                raise TypeError("abscissae must be iterable")
+            self._abscissae = value
+
+
     @property
     def calc_method(self):
         return self._calc_method
@@ -42,37 +60,24 @@ class Datac(object):
     @calc_method.setter
     def calc_method(self, value):
         if self._calc_method:
-            raise AttributeError("calc_method cannot be changed once it has been set")
+            raise AttributeError("calc_method is read-only")
         else:
             self._calc_method = value
-            self.calc_ordinates()
 
 
-    def __init__(self, calc_method, abscissa_name, abscissae, params):
+    @property
+    def ordinates(self):
+        return self._ordinates
 
-        # Type checking on the way in
-        # params
-        if type(params) is not dict:
-            raise TypeError("params must be a dict")
 
-        # abscissae
-        if type(abscissae) is str:
-            raise TypeError("abscissae cannot be a string")
-        try:
-            iterator = iter(abscissae)
-        except TypeError:
-            raise TypeError("abscissae must be iterable")
+    def __init__(self, calc_method, abscissa_name, abscissae, **kwargs):
 
-        # abscissa_name
-        if type(abscissa_name) is not str:
-            raise TypeError("abscissa_name must be a string")
+        self._params = kwargs
+        self.abscissae = abscissae
+        self.abscissa_name = abscissa_name
+        self.calc_method = calc_method
 
-        self._params = params
-        self._abscissae = abscissae
-        self._abscissa_name = abscissa_name
-        self._calc_method = calc_method
-
-        self.calc_ordinates()
+        self._ordinates = self.calc_ordinates()
 
 
     def _to_dict(self):
