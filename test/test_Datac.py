@@ -93,3 +93,9 @@ class API(unittest.TestCase):
         calc_method should be read-only
         """
         self.assertRaises(AttributeError, setattr, self.test_obj, "calc_method", cuboid_volume)
+
+    def test_item_assignment_immutability(self):
+        """
+        Datac objects' elements should be unassignable
+        """
+        self.assertRaises(TypeError, self.test_obj[0], 1.)
