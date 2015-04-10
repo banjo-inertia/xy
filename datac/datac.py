@@ -81,13 +81,25 @@ class Datac(collections.Sequence):
 
     def __repr__(self):
         # Construct a dict containing enough values to specify this object
+        params_repr = self._params_repr()
+
         obj_data = {"class": self.__class__.__name__,
-            "params": self.params,
+            "params": params_repr,
             "calc_method": self.calc_method,
             "abscissae": self.abscissae,
             "ordinates": self.ordinates, }
-        rep = "%(class)s(params=%(params)r, calc_method=%(calc_method)r, abscissae=%(abscissae)r, ordinates=%(ordinates)r)" % obj_data
+        rep = "%(class)s(%(params)s, calc_method=%(calc_method)r, abscissae=%(abscissae)r, ordinates=%(ordinates)r)" % obj_data
         return rep
+
+    def _params_repr(self):
+        """
+        Format self.params for self.__repr__
+
+        The dict stored in self.params need to be output with __repr__. I don't want to simply dump the self.params dict; I want the keys and values to look like "key=val" at the beginning of __repr__. Therefore, I need to construct a string out of these pairs. 
+        """
+        params_slug = "{0!s}={1!r}"
+        params_repr = ", ".join([params_slug.format(key, val) for key, val in self.params.items()])
+        return params_repr
 
 
     def _calc_ordinates(self):
