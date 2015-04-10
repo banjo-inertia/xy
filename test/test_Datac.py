@@ -6,7 +6,7 @@ import numpy as np
 # Some control data and function for the purposes of testing.
 params = {"width": 2., "depth": 3.}
 abscissa_name = "height"
-abscissae = np.linspace(1., 10., 20)
+abscissae = np.linspace(1., 10., 20).tolist()
 
 def cuboid_volume(height, width, depth):
     """
