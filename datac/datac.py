@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*-
 import collections
+import yaml
 import matplotlib.pyplot as plt
 
+
+def datac_representer(dumper, data):
+    """
+    Representer function for Datac objects
+    """
+    obj_dict = data.to_dict()
+    return dumper.represent_mapping(u"!Datac", obj_dict)
 
 class Datac(collections.Sequence):
     """
@@ -140,6 +148,12 @@ class Datac(collections.Sequence):
 
         return obj_dict
 
+    def dump(self):
+        """
+        YAML str representation of object
+        """
+        dmp = yaml.dump(self)
+        return dmp
 
     def plot(self):
         """
@@ -169,3 +183,6 @@ class Datac(collections.Sequence):
         """
         self.plot()
         plt.savefig(*args, **kwargs)
+
+
+yaml.add_representer(Datac, datac_representer)
