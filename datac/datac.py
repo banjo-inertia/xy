@@ -79,6 +79,16 @@ class Datac(collections.Sequence):
     def __len__(self):
         return len(self.abscissae)
 
+    def __repr__(self):
+        # Construct a dict containing enough values to specify this object
+        obj_data = {"class": self.__class__.__name__,
+            "params": self.params,
+            "calc_method": self.calc_method,
+            "abscissae": self.abscissae,
+            "ordinates": self.ordinates, }
+        rep = "%(class)s(params=%(params)r, calc_method=%(calc_method)r, abscissae=%(abscissae)r, ordinates=%(ordinates)r)" % obj_data
+        return rep
+
 
     def _calc_ordinates(self):
         """
