@@ -61,7 +61,6 @@ class Datac(collections.Sequence):
 
 
     def __init__(self, calc_method, abscissa_name, abscissae, **kwargs):
-
         self._params = kwargs
         self.abscissae = abscissae
         self.abscissa_name = abscissa_name
