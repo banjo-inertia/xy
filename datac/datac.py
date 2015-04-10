@@ -82,13 +82,13 @@ class Datac(collections.Sequence):
     def __repr__(self):
         # Construct a dict containing enough values to specify this object
         params_repr = self._params_repr()
+        data = self._cat_data()
 
         obj_data = {"class": self.__class__.__name__,
             "params": params_repr,
             "calc_method": self.calc_method,
-            "abscissae": self.abscissae,
-            "ordinates": self.ordinates, }
-        rep = "%(class)s(%(params)s, calc_method=%(calc_method)r, abscissae=%(abscissae)r, ordinates=%(ordinates)r)" % obj_data
+            "data": data, }
+        rep = "%(class)s(%(params)s, calc_method=%(calc_method)r, data=%(data)r)" % obj_data
         return rep
 
     def _params_repr(self):
