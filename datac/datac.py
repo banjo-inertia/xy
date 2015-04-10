@@ -101,6 +101,17 @@ class Datac(collections.Sequence):
         params_repr = ", ".join([params_slug.format(key, val) for key, val in self.params.items()])
         return params_repr
 
+    def _cat_data(self):
+        """
+        Concatenate list of abscissa, ordinate tuples with header
+
+        This method creates a list from the abscissae and ordinates. Each item in the list is a tuple; the first is `abscissa_name` and the name of `calc_method`. Each subsequent item is the abscissa and corresponding ordinate.
+        """
+        header_data = [[self.abscissa_name, self.calc_method.__name__]]
+        raw_data = zip(self.abscissae, self.ordinates)
+        data = [list(dat) for dat in header_data + raw_data]
+        return data
+
 
     def _calc_ordinates(self):
         """
