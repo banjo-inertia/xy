@@ -80,7 +80,7 @@ class Datac(collections.Sequence):
         return len(self.abscissae)
 
     def __repr__(self):
-        obj_dict = self._obj_dict()
+        obj_dict = self.to_dict()
         # I have to cheat with the params_repr.
         params_repr = self._params_repr()
         obj_dict.update({"params": params_repr})
@@ -89,21 +89,6 @@ class Datac(collections.Sequence):
 
         rep =  rep_slug.format(**obj_dict)
         return rep
-
-    def _obj_dict(self):
-        """
-        Return dict of object data
-
-        The dict returned by this method contains enough data to specify the state of the object.
-        """
-        data = self._cat_data()
-
-        obj_dict = {"class": self.__class__.__name__,
-            "calc_method": self.calc_method,
-            "data": data, }
-        obj_dict.update(self.params)
-
-        return obj_dict
 
     def _params_repr(self):
         """
@@ -137,6 +122,21 @@ class Datac(collections.Sequence):
             raise TypeError("Problem calling calc_method")
 
         return ordinates
+
+    def to_dict(self):
+        """
+        Return dict of object data
+
+        The dict returned by this method contains enough data to specify the state of the object.
+        """
+        data = self._cat_data()
+
+        obj_dict = {"class": self.__class__.__name__,
+            "calc_method": self.calc_method,
+            "data": data, }
+        obj_dict.update(self.params)
+
+        return obj_dict
 
 
     def plot(self):
