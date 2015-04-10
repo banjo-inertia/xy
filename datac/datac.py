@@ -80,6 +80,10 @@ class Datac(collections.Sequence):
 
     def __repr__(self):
         obj_dict = self.to_dict()
+
+        # Include the class info
+        obj_dict.update({"class": self.__class__.__name__})
+
         # I have to cheat with the params_repr.
         params_repr = self._params_repr()
         obj_dict.update({"params": params_repr})
@@ -130,8 +134,7 @@ class Datac(collections.Sequence):
         """
         data = self._cat_data()
 
-        obj_dict = {"class": self.__class__.__name__,
-            "calc_method": self.calc_method,
+        obj_dict = {"calc_method": self.calc_method,
             "data": data, }
         obj_dict.update(self.params)
 
