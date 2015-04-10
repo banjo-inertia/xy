@@ -80,16 +80,30 @@ class Datac(collections.Sequence):
         return len(self.abscissae)
 
     def __repr__(self):
-        # Construct a dict containing enough values to specify this object
+        obj_dict = self._obj_dict()
+        # I have to cheat with the params_repr.
         params_repr = self._params_repr()
+        obj_dict.update({"params": params_repr})
+
+        rep_slug = "{class!s}({params!s}, calc_method={calc_method!r}, data={data!r})"
+
+        rep =  rep_slug.format(**obj_dict)
+        return rep
+
+    def _obj_dict(self):
+        """
+        Return dict of object data
+
+        The dict returned by this method contains enough data to specify the state of the object.
+        """
         data = self._cat_data()
 
-        obj_data = {"class": self.__class__.__name__,
-            "params": params_repr,
+        obj_dict = {"class": self.__class__.__name__,
             "calc_method": self.calc_method,
             "data": data, }
-        rep = "%(class)s(%(params)s, calc_method=%(calc_method)r, data=%(data)r)" % obj_data
-        return rep
+        obj_dict.update(self.params)
+
+        return obj_dict
 
     def _params_repr(self):
         """
