@@ -148,7 +148,7 @@ class Datac(collections.Sequence):
 
         return obj_dict
 
-    def dump(self):
+    def to_yaml(self):
         """
         YAML str representation of object
         """
