@@ -12,6 +12,7 @@ def datac_representer(dumper, data):
     obj_dict = data.to_dict()
     return dumper.represent_mapping(u"!Datac", obj_dict)
 
+
 class Datac(collections.Sequence):
     """
     Model of 2D data with static parameters
@@ -99,14 +100,14 @@ class Datac(collections.Sequence):
 
         rep_slug = "{class!s}({params!s}, calc_method={calc_method!r}, data={data!r})"
 
-        rep =  rep_slug.format(**obj_dict)
+        rep = rep_slug.format(**obj_dict)
         return rep
 
     def _params_repr(self):
         """
         Format self.params for self.__repr__
 
-        The dict stored in self.params need to be output with __repr__. I don't want to simply dump the self.params dict; I want the keys and values to look like "key=val" at the beginning of __repr__. Therefore, I need to construct a string out of these pairs. 
+        The dict stored in self.params need to be output with __repr__. I don't want to simply dump the self.params dict; I want the keys and values to look like "key=val" at the beginning of __repr__. Therefore, I need to construct a string out of these pairs.
         """
         params_slug = "{0!s}={1!r}"
         params_repr = ", ".join([params_slug.format(key, val) for key, val in self.params.items()])
@@ -166,12 +167,12 @@ class Datac(collections.Sequence):
         p = pathlib.Path(path)
 
         if p.exists():
-            if overwrite == False:
+            if overwrite is False:
                 raise ValueError("Attempting to overwrite existing file. Pass `overwrite=True` to override.")
 
         with p.open(mode="w") as f:
             f.write(unicode(self.to_yaml()))
-            
+
 
     def plot(self):
         """

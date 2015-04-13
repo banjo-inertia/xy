@@ -1,4 +1,4 @@
-2# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import unittest
 import datac
 import numpy as np
@@ -7,6 +7,7 @@ import numpy as np
 params = {"width": 2., "depth": 3.}
 abscissa_name = "height"
 abscissae = np.linspace(1., 10., 20).tolist()
+
 
 def cuboid_volume(height, width, depth):
     """
@@ -60,6 +61,7 @@ class Instantiation(unittest.TestCase):
         Datac instantiation should fail if abscissae is not iterable
         """
         self.assertRaises(TypeError, datac.Datac, params, None, abscissa_name)
+
 
 class API(Base):
     """
