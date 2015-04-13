@@ -1,0 +1,9 @@
+0.4.0.dev1
+==========
+Dogfood minimal functionality with new API
+
+This development release is so I can start dogfooding this module. The
+module is now packaged and released using conda. The intialization
+signature for a `Datac` object has been changed to be more pythonic (I
+hope). `Datac` objects behave like lists. Finally, `Datac` modules can
+serialize themselves as YAML and also feature a `save` method.
