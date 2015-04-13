@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+2# -*- coding: utf-8 -*-
 import unittest
 import datac
 import numpy as np
@@ -15,6 +15,27 @@ def cuboid_volume(height, width, depth):
     vol = height * width * depth
 
     return vol
+
+
+# Base classes
+# ============
+class Base(unittest.TestCase):
+    """
+    Base class for tests
+
+    This class is intended to be subclassed so that the same `setUp` method does not have to be rewritten for each class containing tests.
+    """
+    def setUp(self):
+        """
+        Create a Datac object for testing
+        """
+        self.test_obj = datac.Datac(cuboid_volume, abscissa_name, abscissae, **params)
+
+    def tearDown(self):
+        """
+        Destroy the test Datac object
+        """
+        del self.test_obj
 
 
 class Instantiation(unittest.TestCase):
@@ -40,22 +61,10 @@ class Instantiation(unittest.TestCase):
         """
         self.assertRaises(TypeError, datac.Datac, params, None, abscissa_name)
 
-class API(unittest.TestCase):
+class API(Base):
     """
     Test API behaves
     """
-    def setUp(self):
-        """
-        Create a Datac object for testing
-        """
-        self.test_obj = datac.Datac(cuboid_volume, abscissa_name, abscissae, **params)
-
-    def tearDown(self):
-        """
-        Destroy the test Datac object
-        """
-        del self.test_obj
-
     def test_params_read_only(self):
         """
         The params attribute should be read-only
@@ -99,6 +108,7 @@ class API(unittest.TestCase):
         Datac objects' elements should be unassignable
         """
         self.assertRaises(TypeError, self.test_obj[0], 1.)
+
 
 if __name__ == "__main__":
     d = datac.Datac(cuboid_volume, abscissa_name, abscissae, **params)
