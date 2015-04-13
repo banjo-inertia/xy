@@ -22,10 +22,12 @@ requirements:
         - python
         - matplotlib
         - astropy
+        - pyyaml
     run:
         - python
         - matplotlib
         - astropy
+        - pyyaml
 
 test:
     files:
