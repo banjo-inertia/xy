@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import collections
 import yaml
+import pathlib2 as pathlib
 import matplotlib.pyplot as plt
 
 
@@ -154,6 +155,23 @@ class Datac(collections.Sequence):
         """
         dmp = yaml.dump(self)
         return dmp
+
+    def save(self, path, overwrite=False):
+        """
+        Save serialized object to file
+
+        :param str path: Path to which object should be saved.
+        :param bool overwrite: Overwrite file if it exists.
+        """
+        p = pathlib.Path(path)
+
+        if p.exists():
+            if overwrite == False:
+                raise ValueError("Attempting to overwrite existing file. Pass `overwrite=True` to override.")
+
+        with p.open(mode="w") as f:
+            f.write(unicode(self.to_yaml()))
+            
 
     def plot(self):
         """
