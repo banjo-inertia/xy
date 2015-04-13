@@ -110,5 +110,16 @@ class API(Base):
         self.assertRaises(TypeError, self.test_obj[0], 1.)
 
 
+class MethodsReturnType(Base):
+    """
+    Tests methods' output types
+    """
+    def test_to_yaml(self):
+        """
+        Datac.to_yaml should return a string
+        """
+        self.assertIsInstance(self.test_obj.to_yaml(), str)
+
+
 if __name__ == "__main__":
     d = datac.Datac(cuboid_volume, abscissa_name, abscissae, **params)
