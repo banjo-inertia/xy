@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import collections
 import yaml
-import pathlib2 as pathlib
+import pathlib as pathlib
 import matplotlib.pyplot as plt
 
 

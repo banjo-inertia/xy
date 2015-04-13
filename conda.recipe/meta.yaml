@@ -23,11 +23,13 @@ requirements:
         - matplotlib
         - astropy
         - pyyaml
+        - pathlib
     run:
         - python
         - matplotlib
         - astropy
         - pyyaml
+        - pathlib
 
 test:
     files:
