@@ -3,6 +3,7 @@ import collections
 import yaml
 import pathlib as pathlib
 import matplotlib.pyplot as plt
+from . import __version__
 
 
 def datac_representer(dumper, data):
@@ -68,6 +69,10 @@ class Datac(collections.Sequence):
     @property
     def ordinates(self):
         return self._ordinates
+
+    @property
+    def datac_version(self):
+        return __version__
 
 
     def __init__(self, calc_method, abscissa_name, abscissae, **kwargs):
@@ -147,6 +152,7 @@ class Datac(collections.Sequence):
         obj_dict = {"calc_method": self.calc_method,
             "data": data, }
         obj_dict.update(self.params)
+        obj_dict.update({"datac_version": self.datac_version})
 
         return obj_dict
 
