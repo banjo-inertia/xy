@@ -28,6 +28,7 @@ install:
   # Replace dep1 dep2 ... with your dependencies
   - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION jinja2 anaconda
   - source activate test-environment
+  - conda install jinja2
   - conda build -c jrsmith3 conda.recipe
   - conda install datac --use-local
 
